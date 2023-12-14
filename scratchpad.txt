@@ -1,0 +1,55 @@
+https://www.youtube.com/watch?v=bzC3FH0EpG8
+
+3:35 - understanding NPM resource model
+- research necessary resources in the npm documentation
+- users, rules, groups, or relevant groups or permissions we want to grant access to
+- https://docs.npmjs.com/about-access-tokens
+- https://docs.npmjs.com/adding-members-to-your-organization
+
+
+---------------------------------------------------------------------------------------------------
+
+
+https://github.com/npm/registry/blob/master/docs/orgs/memberships.md#change-membership-request
+
+// Change Membership Request
+{
+  "user": String,
+  "role": "developer"
+}
+
+// Membership Detail
+{
+  org: {
+    name: String,
+    size: Number
+  },
+  user: String,
+  role: "developer"
+}
+
+// Org Membership Replace API, add or change user membership in org identified by SCOPE (?)
+// in: Change Membership Request, out: Membership Detail
+curl -u user:pass \
+     -X PUT \
+     -H 'content-type: application/json' \
+     -d <Change Membership Request> \
+     https://registry.npmjs.org/-/org/SCOPE/user
+
+
+// NPM Auth
+$ curl -H 'Authorization: Bearer TOKEN' https://registry.npmjs.org/
+
+// Token Creation Request
+{
+  password: String,
+  readonly: Boolean,
+  cidr_whitelist: ["", "", ...]  # list of allowed IP addresses, can this be null?
+}
+
+// Token Create
+curl -u user:pass \
+     -X POST \
+     -H 'content-type: application/json' \
+     -d <Token Creation Request>
+     https://registry.npmjs.org/-/npm/v1/tokens
